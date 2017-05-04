@@ -1,0 +1,26 @@
+{
+  "name": "token-based-auth",
+  "version": "1.0.0",
+  "description": "This is token-based authentication server",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "keywords": [
+    "Node.js",
+    "Express.js",
+    "jwt",
+    "authentication",
+    "token"
+  ],
+  "author": "Nhan Nguyen Thien",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "jsonwebtoken": "^7.4.0",
+    "mongoose": "^4.9.6",
+    "morgan": "^1.8.1"
+  }
+}
