@@ -54,6 +54,31 @@ app.post('/login', (req, res) => {
   })
 })
 
+// all request to "/api/*" must handle by this handler before go next
+app.use('/api/*', (req, res, next) => {
+  // access-token can be sent in url query or in headers
+  let token = req.headers.authorization || req.query['access-token']
+
+  if (!token) return res.status(401).json({success: false, msg: 'Invalid token'})
+
+  // decode token
+  jwt.verify(token, 'secret', (err, decoded) => {
+    // if the token is invalid we will send back a response to client
+    if (err) return res.status(401).json({success: false, msg: 'Invalid token'})
+    // if token is valid
+    req.user = decoded
+    next()
+  })
+})
+
+// This route is protected
+app.get('/api/me', (req, res) => {
+  User.findById(req.user._id).exec((err, user) => {
+    if (err) return res.status(500).json({success: false})
+    res.status(200).json({success: true, user: user})
+  })
+})
+
 server.listen(process.env.PORT || 8082, function () {
   console.log(`Listen on port ${process.env.PORT || '8082'}`)
 })
